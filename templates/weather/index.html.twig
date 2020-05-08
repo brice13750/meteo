@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Meteo
+{% endblock %}
+
+{% block body %}
+	<section id='weather'>
+		<div class="container">
+			<h1 class="text-center my-5">jQuery seulement</h1>
+
+
+			<div class="row">
+				<div class="col-12 col-md-6">
+					<div class="image text-center">
+						<img class="img-fluid" src="{{ asset('images/img.jpg')}}" alt="">
+					</div>
+				</div>
+
+				<div class="col-12 col-md-6">
+					<div class="data text-center">
+						<p class="my-5" id="zone"></p>
+					</div>
+
+					<div class="col-12 col-md-8 mx-auto">
+						<input type="text" class="form-control" id="user" type="text" placeholder="entrer une ville">
+						<input type="button" id="submit" value="Récuperer la méteo" class="form-control my-5">
+						<p class="result text-center font-weight-bold"></p>
+						<p class="feel text-center font-weight-bold"></p>
+						<p class="min text-center font-weight-bold"></p>
+						<p class="max text-center font-weight-bold"></p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	{% block javascripts %}
+		<script src="{{ asset('js/weither.js') }}"></script>
+		{{ encore_entry_script_tags('app') }}
+	{% endblock %}
+
+{% endblock %}
