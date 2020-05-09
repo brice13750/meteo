@@ -25,8 +25,9 @@ class WeatherController extends AbstractController
     /**
      * @Route("/weather", name="weather")
      */
-    public function index(WeatherService $ws, SerializerInterface $serializer, NormalizerInterface $normalizer, Request $request)
+    public function index()
     {
+        //avec jquery seulement
         return $this->render('weather/index.html.twig', array(
 
         ));
@@ -48,7 +49,7 @@ class WeatherController extends AbstractController
 
 
     /**
-     * @Route("/search", name="get__weather")
+     * @Route("/search", name="search")
      */
     public function Weather(WeatherService $ws, Request $request)
     {
@@ -60,12 +61,11 @@ class WeatherController extends AbstractController
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid())
         {
-            // je récupere la donnée envoyée dans le formulaire
+            //retrieving form data
             $city = $form->getData();
-            // je crée une variable qui contient la méthode getweather qui vient du service en lui passant la ville en paramètre
-            $weather = $ws->getWeather($city);
 
-            //je décode les données reçu
+            $weather = $ws->getWeather($city);
+            
             $jsonForm = json_decode(json_encode($weather), true);
 
             // dd($jsonForm);

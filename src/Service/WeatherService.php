@@ -3,7 +3,6 @@
 namespace App\Service;
 
 use Symfony\Component\HttpClient\HttpClient;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
 class WeatherService
@@ -22,12 +21,22 @@ class WeatherService
      */
     public function getToulouseWeather()
     {
+        try{
         $response = $this->client->request('GET', 'https://api.openweathermap.org/data/2.5/weather?q=Toulouse&appid=' . $this->apiKey .'&units=metric');
 
-        $statusCode = $response->getStatusCode();
-        $contentType = $response->getHeaders()['content-type'][0];
-        $content = $response->getContent();
-        $content = $response->toArray();
+
+                if (200 !== $response->getStatusCode()) {
+                    throw new \Exception('Ville introuvable');
+                } else {
+                    $contentType = $response->getHeaders()['content-type'][0];
+                    $content = $response->getContent();
+                    $content = $response->toArray();
+                }
+
+
+            }catch (TransportExceptionInterface $e){
+                var_dump($e);
+            }
 
         return [
             $content
@@ -39,13 +48,23 @@ class WeatherService
      * @return array
      */
     public function getWeather($city)
-    {
+    {           
+            try{
                 $response = $this->client->request('GET', 'https://api.openweathermap.org/data/2.5/weather?q='.$city.'&appid=' . $this->apiKey .'&units=metric');
+                
+                if (200 !== $response->getStatusCode()) {
+                    throw new \Exception('Ville introuvable');
+                } else {
+                    $contentType = $response->getHeaders()['content-type'][0];
+                    $content = $response->getContent();
+                    $content = $response->toArray();
+                }
 
-                $statusCode = $response->getStatusCode();
-                $contentType = $response->getHeaders()['content-type'][0];
-                $content = $response->getContent(false);
-                $content = $response->toArray();
+
+            }catch (TransportExceptionInterface $e){
+                var_dump($e);
+            }
+                
     
         return [
             $content
